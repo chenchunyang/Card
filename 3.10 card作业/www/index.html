@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="angular.js"></script>
+    <style>
+        div {
+            width: 600px;
+            height: 400px;
+            background-color: rgb(211, 147, 9);
+            background-repeat: no-repeat;
+            background-size: 60% auto;
+            background-position: 150% 5%;
+        }
+
+        div {
+            margin: 0 auto
+        }
+
+        section {
+            margin-top: 50px;
+        }
+
+        section>div:nth-of-type(1) {
+            position: relative;
+            transform: rotate(15deg);
+            top: 30px;
+            background-image: url("./img/5.png");
+            margin-bottom: 20px;
+            border-bottom: 2px solid gray
+        }
+
+        button {
+            width: 70px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid black;
+            position: fixed;
+            right: 5%;
+            top: 5%;
+            background-color:  rgb(68, 68, 68)
+        }
+
+        img {
+            width: 40%;
+            margin-left: 10%;
+            margin-top: 5%
+        }
+
+        ul {
+            list-style: none;
+            color: white;
+        }
+
+        section>div:nth-of-type(2) {
+            display: flex;
+            
+
+        }
+
+        .left>img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-top: 140px;
+
+        }
+        .left{
+            width: 30%
+        }
+        .right{
+            width: 70%
+        }
+        .right>p{
+            text-indent: 2em;
+            margin-top: 150px;
+            color: white;
+        }
+        body{
+            background-color: rgb(68, 68, 68)
+        }
+        li:nth-of-type(1){
+            font-size: 2rem;
+        }
+        li:nth-of-type(2){
+            margin-bottom: 30px;
+        }
+        li:nth-of-type(5){
+            display: inline-block
+        }
+        li:nth-of-type(4){
+            display: inline-block;
+            margin-right: 30px
+
+        }
+        li:nth-of-type(3){
+            margin-bottom: 10px
+        }
+        li:nth-of-type(6){
+            margin-top: 10px
+        }
+
+
+    </style>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+    <button ng-click="edit()">编辑</button>
+    <section>
+
+        <div>
+            <img src="./img/3.png" alt="">
+            <ul>
+                <li><strong>{{card[0].name}}</strong></li>
+                <li>{{card[0].position}}</li>
+                <li>地址:&nbsp;&nbsp;{{card[0].address}}</li>
+                <li>手机:&nbsp;&nbsp;{{card[0].tel}}</li>
+                <li>QQ:&nbsp;&nbsp;{{card[0].qq}}</li>
+                <li>电子邮箱:&nbsp;&nbsp;{{card[0].email}}</li>
+            </ul>
+
+        </div>
+        <div>
+            <div class="left">
+                <img src="./img/4.jpg" alt="">
+            </div>
+            <div class="right">
+                <p>{{card[0].intro}}</p>
+            </div>
+
+        </div>
+    </section>
+    <script>
+        var app = angular.module('myApp', [])
+        app.controller('myCtrl', function ($scope, $http) {
+           
+            $http.get('/card').then(function (res) {
+                console.log(res)
+                $scope.card = res.data.data
+                console.log($scope.card)
+            })
+            $scope.edit = function () {
+                location.href = "edit.html"
+            }
+        })
+    </script>
+</body>
+
+</html>

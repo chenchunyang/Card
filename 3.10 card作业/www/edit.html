@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="angular.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+    <form ng-submit="btnClick()">
+        <label for="name">姓名:</label>
+        <br>
+        <input type="text" id="name" ng-model="name">
+        <br>
+        <br>
+
+        <label for="position">职位:</label>
+        <br>
+        <input type="text" id="position" ng-model="position">
+        <br>
+        <br>
+
+        <label for="address">地址:</label>
+        <br>
+        <input type="text" id="address" ng-model="address">
+        <br>
+        <br>
+
+        <label for="tel">手机号:</label>
+        <br>
+        <input type="number" id="tel" ng-model="tel" maxlength="15">
+        <br>
+        <br>
+
+        <label for="qq">QQ号:</label>
+        <br>
+        <input type="number" id="qq" ng-model="qq" maxlength="15">
+        <br>
+        <br>
+
+        <label for="email">电子邮箱:</label>
+        <br>
+        <input type="email" id="email" ng-model="email">
+        <br>
+        <br>
+
+        <label for="intro">介绍:</label>
+        <br>
+        <textarea name="intro" id="intro" cols="30" rows="10" ng-model="intro"></textarea>
+        <br>
+        <br>
+
+        <input type="submit" value="保存">
+    </form>
+
+    <script src="./jquery-3.2.1.js"></script>
+
+    <script>
+        var app = angular.module('myApp', [])
+        app.controller('myCtrl', function ($scope, $http) {
+            $scope.btnClick = function () {
+                // event.preventDefault();
+                var value = "name="+$scope.name + "&position="+$scope.position +"&address="+$scope.address +"&tel="+$scope.tel +"&qq="+$scope.qq +"&email="+$scope.email +"&intro="+$scope.intro+"&id="+ $scope.id 
+                $http.get('/save?'+value).then(function (res) {
+                    console.log(res)
+                    // $scope.student = res.data.data
+                    console.log($scope.student)
+                })
+                location.href ="/"
+            }
+           
+           $http.get('/edit').then(function(res){
+               console.log(res);
+               $scope.card = res.data.data
+                console.log($scope.card)
+                $scope.name = $scope.card[0].name
+                $scope.position = $scope.card[0].position
+                $scope.address = $scope.card[0].address
+                $scope.tel = parseInt($scope.card[0].tel) 
+                console.log($scope.card[0].tel)
+                $scope.qq =  parseInt($scope.card[0].qq)
+                $scope.email = $scope.card[0].email
+                $scope.intro = $scope.card[0].intro
+                $scope.id = $scope.card[0]._id
+           })
+        })
+    </script>
+</body>
+
+</html>
